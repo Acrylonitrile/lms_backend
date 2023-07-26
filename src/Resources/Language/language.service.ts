@@ -2,11 +2,9 @@ import { Repository } from "typeorm"
 import BaseService from "../Services/base.service"
 import { Language } from "./entity"
 import db from "../database"
-import { MentorService } from "../Mentors/mentors.service"
+import mentorService from "../Mentors/mentors.service"
 import { getSystemErrorMap } from "util"
 import { Mentor } from "../Mentors/entity"
-
-const mentorService = new MentorService(db.getRepository(Mentor))
 
 export class LanguageService extends BaseService<Language> {
   assignMentor = async (id: number, mentorId: number) => {
@@ -28,3 +26,6 @@ export class LanguageService extends BaseService<Language> {
     }
   }
 }
+
+const languageService = new LanguageService(db.getRepository(Language))
+export default languageService

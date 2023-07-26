@@ -16,5 +16,6 @@ languageRouter.post(
   validateCredentials(assignMentor),
   languageController.assignMentor
 )
+languageRouter.get("/", languageController.getAllLanguages)
 
 export default languageRouter

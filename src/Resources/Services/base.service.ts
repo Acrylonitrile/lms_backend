@@ -1,6 +1,8 @@
 import { test } from "node:test"
 import {
+  FindManyOptions,
   FindOneOptions,
+  FindOptions,
   FindOptionsWhere,
   ObjectLiteral,
   Repository
@@ -22,9 +24,18 @@ class BaseService<Type extends ObjectLiteral> {
       throw error
     }
   }
+  findAllValues = async (options?: FindManyOptions<Type>) => {
+    try {
+      const result = await this.repo.find(options)
+      if (result.length === 0) throw new Error("null data")
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
   findValue = async (options: FindOneOptions<Type>) => {
     try {
-      console.log(this.repo.target, options)
+      //   console.log(this.repo.target, options)
       const result = await this.repo.findOne(options)
       if (result === null) throw new Error("null data")
       return result

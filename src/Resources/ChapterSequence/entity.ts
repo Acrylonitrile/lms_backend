@@ -9,5 +9,5 @@ export class ChapterSequence {
   @JoinColumn()
   language: Language
   @Column({ length: 50, unique: true })
-  name: string
+  sequence: string
 }

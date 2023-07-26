@@ -9,6 +9,6 @@ export class Fresher extends Admin {
   training_status: "ongoing" | "completed"
   @OneToMany(() => ChapterStatus, (chapterStatus) => chapterStatus.fresher)
   chapterStatus: ChapterStatus[]
-  @ManyToOne(() => Enrollment, (enrollment) => enrollment.fresher)
+  @OneToMany(() => Enrollment, (enrollment) => enrollment.fresher)
   enrollment: Enrollment[]
 }

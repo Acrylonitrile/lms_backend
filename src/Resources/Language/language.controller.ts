@@ -1,9 +1,7 @@
 import { Request, Response } from "express"
-import { LanguageService } from "./language.service"
+import languageService from "./language.service"
 import { Language } from "./entity"
 import db from "../database"
-
-const languageService = new LanguageService(db.getRepository(Language))
 
 export class LanguageController {
   addLanguage = async (req: Request, res: Response) => {
@@ -21,6 +19,14 @@ export class LanguageController {
     const { languageId, mentorId } = req.body
     try {
       const result = await languageService.assignMentor(languageId, mentorId)
+      return res.status(200).send(result)
+    } catch (error: any) {
+      return res.status(400).send({ error: error.message })
+    }
+  }
+  getAllLanguages = async (req: Request, res: Response) => {
+    try {
+      const result = await languageService.findAllValues()
       return res.status(200).send(result)
     } catch (error: any) {
       return res.status(400).send({ error: error.message })
