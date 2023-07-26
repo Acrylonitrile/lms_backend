@@ -1,4 +1,11 @@
-import { FindOptionsWhere, ObjectLiteral, Repository } from "typeorm"
+import { test } from "node:test"
+import {
+  FindOneOptions,
+  FindOptionsWhere,
+  ObjectLiteral,
+  Repository
+} from "typeorm"
+import db from "../database"
 
 class BaseService<Type extends ObjectLiteral> {
   repo: Repository<Type>
@@ -7,23 +14,30 @@ class BaseService<Type extends ObjectLiteral> {
   }
   insertValues = async (value: Type | Type[]) => {
     try {
-      return this.repo.insert(value)
+      console.log(this.repo)
+      const result = await db.manager.save(value)
+      console.log(result)
+      return result
     } catch (error: any) {
-      throw new Error("failed to execute query: " + error.details[0].message)
+      throw error
     }
   }
-  findValue = async (options: FindOptionsWhere<Type>) => {
+  findValue = async (options: FindOneOptions<Type>) => {
     try {
+      console.log(this.repo.target, options)
       const result = await this.repo.findOne(options)
+      if (result === null) throw new Error("null data")
+      return result
     } catch (error: any) {
-      throw new Error("failed to execute query: " + error.details[0].message)
+      // console.log(error)
+      throw error
     }
   }
   updateValue = async (value: Type, whereOptions: FindOptionsWhere<Type>) => {
     try {
-      return this.repo.update(whereOptions, value)
+      return await this.repo.update(whereOptions, value)
     } catch (error: any) {
-      throw new Error("failed to execute query: " + error.details[0].message)
+      throw error
     }
   }
 }

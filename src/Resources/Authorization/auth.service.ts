@@ -58,7 +58,7 @@ export class AuthService {
         .execute()
       return result
     } catch (error: any) {
-      throw new Error("failed to signup: " + error.details[0].message)
+      throw new Error(error)
     }
   }
   login = async (email: string, password: string) => {
@@ -77,7 +77,8 @@ export class AuthService {
         Authorization: "Bearer " + accessToken
       }
     } catch (error: any) {
-      throw new Error("failed to signup: " + error.details[0].message)
+      console.log(error.error)
+      throw new Error("failed to login: " + error.error)
     }
   }
 }

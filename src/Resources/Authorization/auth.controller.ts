@@ -26,7 +26,7 @@ export class AuthController {
       )
       return res.status(201).send(result)
     } catch (error) {
-      return res.status(400).send(error)
+      return res.status(400).send({ error })
     }
   }
   login = async (req: Request, res: Response) => {
@@ -35,8 +35,8 @@ export class AuthController {
     try {
       const result = await authService.login(email, password)
       return res.status(200).send(result)
-    } catch (error) {
-      return res.status(401).send(error)
+    } catch (error: any) {
+      return res.status(401).send({ error })
     }
   }
 }

@@ -1,19 +1,19 @@
 import { Router } from "express"
-import { ValidationController } from "../Validation/validation.controller"
+import { validateCredentials } from "../Middleware/Validation/validation"
 import { AuthController } from "./auth.controller"
+import { loginSchema, signUpSchema } from "./validation.schemas"
 
 const authRouter = Router()
-const validationController = new ValidationController()
 const authController = new AuthController()
 
 authRouter.post(
   "/signup",
-  validationController.validateSignup,
+  validateCredentials(signUpSchema),
   authController.signUp
 )
 authRouter.post(
   "/login",
-  validationController.validateLogin,
+  validateCredentials(loginSchema),
   authController.login
 )
 
