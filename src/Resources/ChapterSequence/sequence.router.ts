@@ -1,6 +1,6 @@
 import { Router } from "express"
 import sequenceController from "./sequence.controller"
-import { validateCredentials } from "../Middleware/Validation/validation"
+import { validateRequest } from "../Middleware/Validation/validation"
 import {
   addNewChapter,
   addNewSequence,
@@ -13,24 +13,24 @@ const sequenceRouter = Router()
 
 sequenceRouter.post(
   "/add",
-  validateCredentials(addNewSequence),
+  validateRequest(addNewSequence),
   sequenceValidation.validateNewSequence,
   sequenceController.addSequence
 )
 sequenceRouter.post(
   "/addchapter",
-  validateCredentials(addNewChapter),
+  validateRequest(addNewChapter),
   sequenceValidation.validateNewChapter,
   sequenceController.addNewChapter
 )
 sequenceRouter.put(
   "/",
-  validateCredentials(getSequence),
+  validateRequest(getSequence),
   sequenceController.getSequence
 )
 sequenceRouter.post(
   "/alter",
-  validateCredentials(alterSequence),
+  validateRequest(alterSequence),
   sequenceController.alterSequence
 )
 

@@ -7,9 +7,7 @@ import sequenceValidation from "./sequence.validation"
 class SequenceService extends BaseService<ChapterSequence> {
   addSequence = async (sequence: number[], languageId: number) => {
     try {
-      const language = await languageService.findValue({
-        where: { id: languageId }
-      })
+      const language = await languageService.findValue({ id: languageId })
       const newSequence = new ChapterSequence()
       newSequence.sequence = JSON.stringify(sequence)
       newSequence.language = language
@@ -21,11 +19,9 @@ class SequenceService extends BaseService<ChapterSequence> {
   getSequence = async (languageId: number) => {
     try {
       const jsonSequence = await this.findValue({
-        where: {
-          language: await languageService.findValue({
-            where: { id: languageId }
-          })
-        }
+        language: await languageService.findValue({
+          id: languageId
+        })
       })
       return (await JSON.parse(jsonSequence.sequence)) as number[]
     } catch (error) {

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import Joi from "joi"
 
-export const validateCredentials =
+export const validateRequest =
   (schema: Joi.ObjectSchema<any>) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
