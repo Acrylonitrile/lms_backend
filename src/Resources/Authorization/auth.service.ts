@@ -66,9 +66,9 @@ export class AuthService {
       const userDetails = await db.manager.findOne(this.table, {
         where: { email }
       })
-      if (!userDetails) throw { error: "invalid email" }
+      if (!userDetails) throw new Error("invalid email")
       const passwordCheck = await bcrypt.compare(password, userDetails.password)
-      if (!passwordCheck) throw { error: "invalid password" }
+      if (!passwordCheck) throw new Error("invalid password")
       const accessToken = jwt.sign(
         { email: userDetails.email },
         this.tokenSecret
@@ -77,8 +77,7 @@ export class AuthService {
         Authorization: "Bearer " + accessToken
       }
     } catch (error: any) {
-      console.log(error.error)
-      throw new Error("failed to login: " + error.error)
+      throw error
     }
   }
 }
