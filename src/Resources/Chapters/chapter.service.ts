@@ -9,9 +9,7 @@ const languageService = new LanguageService(db.getRepository(Language))
 class ChapterService extends BaseService<Chapters> {
   addChapters = async (chapterList: string[], languageId: number) => {
     try {
-      const language = await languageService.findValue({
-        where: { id: languageId }
-      })
+      const language = await languageService.findValue({ id: languageId })
       const entries = chapterList.map((chapter) => {
         const tempChapter = new Chapters()
         tempChapter.name = chapter

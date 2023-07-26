@@ -10,11 +10,9 @@ export class LanguageService extends BaseService<Language> {
   assignMentor = async (id: number, mentorId: number) => {
     try {
       const mentorDetails = await mentorService.findValue({
-        where: { id: mentorId }
+        id: mentorId
       })
-      console.log(mentorDetails)
-      const languageDetails = await this.findValue({ where: { id } })
-      console.log(languageDetails)
+      const languageDetails = await this.findValue({ id })
       if (!mentorDetails) throw new Error("invalid mentorId")
       if (!languageDetails) throw new Error("invalid languageId")
       return await this.updateValue(

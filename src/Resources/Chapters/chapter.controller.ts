@@ -17,9 +17,7 @@ export class ChapterController {
     try {
       const { languageId } = req.body
       const result = await chapterService.findAllValues({
-        where: {
-          language: await languageService.findValue({ where: languageId })
-        }
+        language: await languageService.findValue({ id: languageId })
       })
       return res.status(200).send(result)
     } catch (error: any) {

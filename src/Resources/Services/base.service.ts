@@ -24,19 +24,19 @@ class BaseService<Type extends ObjectLiteral> {
       throw error
     }
   }
-  findAllValues = async (options?: FindManyOptions<Type>) => {
+  findAllValues = async (options?: FindOptionsWhere<Type>) => {
     try {
-      const result = await this.repo.find(options)
+      const result = await this.repo.find({ where: options })
       if (result.length === 0) throw new Error("null data")
       return result
     } catch (error) {
       throw error
     }
   }
-  findValue = async (options: FindOneOptions<Type>) => {
+  findValue = async (options: FindOptionsWhere<Type>) => {
     try {
       //   console.log(this.repo.target, options)
-      const result = await this.repo.findOne(options)
+      const result = await this.repo.findOne({ where: options })
       if (result === null) throw new Error("null data")
       return result
     } catch (error: any) {

@@ -13,11 +13,7 @@ class SequenceValidation {
     const { sequence, languageId } = req.body
     try {
       const chapterList = await chapterService.findAllValues({
-        where: {
-          language: await languageService.findValue({
-            where: { id: languageId }
-          })
-        }
+        language: await languageService.findValue({ id: languageId })
       })
       const idList = chapterList.map((chapter) => chapter.id)
       idList.sort()
@@ -38,12 +34,10 @@ class SequenceValidation {
     const { chapterId, languageId } = req.body
     try {
       await chapterService.findValue({
-        where: {
-          id: chapterId,
-          language: await languageService.findValue({
-            where: { id: languageId }
-          })
-        }
+        id: chapterId,
+        language: await languageService.findValue({
+          id: languageId
+        })
       })
       next()
     } catch (error) {
