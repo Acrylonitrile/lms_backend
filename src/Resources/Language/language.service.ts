@@ -7,17 +7,17 @@ import { getSystemErrorMap } from "util"
 import { Mentor } from "../Mentors/entity"
 
 export class LanguageService extends BaseService<Language> {
-  assignMentor = async (id: number, mentorId: number) => {
+  assignMentor = async (languageId: number, mentorId: number) => {
     try {
       const mentorDetails = await mentorService.findValue({
         id: mentorId
       })
-      const languageDetails = await this.findValue({ id })
+      const languageDetails = await this.findValue({ id: languageId })
       if (!mentorDetails) throw new Error("invalid mentorId")
       if (!languageDetails) throw new Error("invalid languageId")
       return await this.updateValue(
         { ...languageDetails, mentor: mentorDetails },
-        { id }
+        { id: languageId }
       )
     } catch (error: any) {
       throw error

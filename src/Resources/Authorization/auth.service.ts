@@ -58,7 +58,7 @@ export class AuthService {
         .execute()
       return result
     } catch (error: any) {
-      throw new Error(error)
+      throw error
     }
   }
   login = async (email: string, password: string) => {
