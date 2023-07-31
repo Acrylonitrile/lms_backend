@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import sequenceService from "./sequence.service"
+import { IUserDetails } from "../Middleware/Validation/validation"
 
 class SequenceController {
   addSequence = async (req: Request, res: Response) => {

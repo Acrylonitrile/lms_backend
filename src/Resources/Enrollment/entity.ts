@@ -20,6 +20,6 @@ export class Enrollment {
   language: Language
   @CreateDateColumn()
   date_start: Date
-  @Column()
+  @Column({ nullable: true, default: null })
   date_completed: Date
 }

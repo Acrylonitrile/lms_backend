@@ -3,7 +3,9 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  OneToMany
+  OneToMany,
+  ManyToMany,
+  JoinTable
 } from "typeorm"
 import { Mentor } from "../Mentors/entity"
 import { Chapters } from "../Chapters/entity"

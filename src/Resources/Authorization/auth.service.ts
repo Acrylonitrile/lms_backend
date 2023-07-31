@@ -12,26 +12,18 @@ env.config()
 export type Roles = "admin" | "mentor" | "fresher"
 type UserTables = Admin | Mentor | Fresher
 
-const tableMap = new Map<Roles, EntityTarget<UserTables>>([
+export const tableMap = new Map<Roles, EntityTarget<UserTables>>([
   ["admin", Admin],
   ["mentor", Mentor],
   ["fresher", Fresher]
 ])
 
-const secretMap = new Map<Roles, string>([
-  ["admin", process.env.ADMIN_TOKEN_SECRET as string],
-  ["fresher", process.env.FRESHER_TOKEN_SECRET as string],
-  ["mentor", process.env.MENTOR_TOKEN_SECRET as string]
-])
-
 export class AuthService {
   role: Roles
   table: EntityTarget<UserTables>
-  tokenSecret: string
   constructor(role: Roles) {
     this.role = role
     this.table = tableMap.get(role) as EntityTarget<UserTables>
-    this.tokenSecret = secretMap.get(this.role) as string
   }
 
   signUp = async (
@@ -70,8 +62,8 @@ export class AuthService {
       const passwordCheck = await bcrypt.compare(password, userDetails.password)
       if (!passwordCheck) throw new Error("invalid password")
       const accessToken = jwt.sign(
-        { email: userDetails.email },
-        this.tokenSecret
+        { id: userDetails.id, email: userDetails.email, role: this.role },
+        process.env.TOKEN_SECRET as string
       )
       return {
         Authorization: "Bearer " + accessToken
