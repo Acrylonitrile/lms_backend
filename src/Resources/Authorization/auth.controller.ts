@@ -34,7 +34,9 @@ export class AuthController {
     const authService = new AuthService(role)
     try {
       const result = await authService.login(email, password)
-      return res.status(200).send(result)
+      setTimeout(() => {
+        return res.status(200).send(result)
+      }, 5000)
     } catch (error: any) {
       return res.status(401).send({ error: error.message })
     }

@@ -66,7 +66,7 @@ export class AuthService {
         process.env.TOKEN_SECRET as string
       )
       return {
-        Authorization: "Bearer " + accessToken
+        Authorization: accessToken
       }
     } catch (error: any) {
       throw error

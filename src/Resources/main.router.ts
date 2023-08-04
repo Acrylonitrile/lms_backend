@@ -7,6 +7,7 @@ import enrollmentRouter from "./Enrollment/enrollment.router"
 import { validateToken } from "./Middleware/Validation/validation"
 
 const mainRouter = Router()
+
 mainRouter.use("/auth", authRouter)
 mainRouter.use("/language", validateToken, languageRouter)
 mainRouter.use("/chapters", validateToken, chapterRouter)
