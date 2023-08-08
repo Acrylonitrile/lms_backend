@@ -7,22 +7,25 @@ import { Enrollment } from "./entity"
 class EnrollmentService extends BaseService<Enrollment> {
   enrollStudent = async (fresherId: number, languageId: number) => {
     try {
-      const enrollment = new Enrollment()
-      enrollment.fresher = await fresherService.findValue({
-        id: fresherId
+      const [fresher, language] = await Promise.all([
+        fresherService.findValue({ id: fresherId }),
+        languageService.findValue({ id: languageId })
+      ])
+      return await this.insertValues({
+        ...new Enrollment(),
+        fresher,
+        language
       })
-      enrollment.language = await languageService.findValue({
-        id: languageId
-      })
-      return await this.insertValues(enrollment)
     } catch (error) {
       throw error
     }
   }
   finishCourse = async (fresherId: number, languageId: number) => {
     try {
-      const language = await languageService.findValue({ id: languageId })
-      const fresher = await fresherService.findValue({ id: fresherId })
+      const [fresher, language] = await Promise.all([
+        fresherService.findValue({ id: fresherId }),
+        languageService.findValue({ id: languageId })
+      ])
       const enrollment = await this.findValue({ language, fresher })
       return await this.updateValue(
         { ...enrollment, date_completed: new Date() },

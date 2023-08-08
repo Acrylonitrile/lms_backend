@@ -50,7 +50,7 @@ export const checkEnrollmentMentor = async (
       if (!enrolledLanguage)
         throw new Error("You gave not been assigned to this language")
     } catch (error: any) {
-      return res.status(400).send({ error: error.message })
+      return res.status(401).send({ error: error.message })
     }
   }
   next()

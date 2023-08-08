@@ -81,7 +81,7 @@ chapterRouter.post(
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/components/ErrorResponse'
+ *        $ref: '#/components/schemas/ErrorResponse'
  */
 
 chapterRouter.get(
